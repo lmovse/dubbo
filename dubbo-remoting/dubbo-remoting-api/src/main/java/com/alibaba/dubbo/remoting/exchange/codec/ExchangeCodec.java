@@ -96,6 +96,7 @@ public class ExchangeCodec extends TelnetCodec {
                     break;
                 }
             }
+            // 到这里的话，说明此次请求不是一个 dubbo 协议的请求，可能是 telnet 的请求，所以交由父类 telnet 尝试解码
             return super.decode(channel, buffer, readable, header);
         }
         // check length.
@@ -113,6 +114,7 @@ public class ExchangeCodec extends TelnetCodec {
         }
 
         // limit input stream.
+        // 这里，将序列化的字节数组包装成一个 inputStream 交由反序列化模块反序列化
         ChannelBufferInputStream is = new ChannelBufferInputStream(buffer, len);
 
         try {
